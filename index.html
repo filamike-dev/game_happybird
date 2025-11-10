@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小蜜蜂 (Space Invaders)</title>
+    <!-- 連結外部 CSS 檔案 -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="game-container">
+    <h1>👾 小蜜蜂入侵 👾</h1>
+    
+    <div id="game-stats">
+        <span>分數: <span id="score">0</span></span>
+        <span>生命: <span id="lives">3</span></span>
+    </div>
+
+    <!-- 遊戲畫布 -->
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- 操作按鈕 -->
+    <div id="controls">
+        <!-- 這些 onclick 函數在 script.js 中定義 -->
+        <button class="game-btn" onclick="movePlayer(-1)">&#9664; 左移</button>
+        <button class="game-btn" onclick="fireBullet()">射擊 &#9650;</button>
+        <button class="game-btn" onclick="movePlayer(1)">右移 &#9654;</button>
+        <button class="game-btn" id="start-btn">開始/暫停</button>
+    </div>
+</div>
+
+<!-- 遊戲訊息彈窗/模態框 -->
+<div id="message-box">
+    <div id="message-content">
+        <p id="message-text"></p>
+        <button class="game-btn" onclick="hideMessage()">確定</button>
+    </div>
+</div>
+
+<!-- 連結外部 JavaScript 檔案，確保在元素載入後執行 -->
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+/* 復古街機風格 */
+body {
+    font-family: 'Press Start 2P', 'Courier New', monospace; /* 模擬像素字體 */
+    background: linear-gradient(to bottom right, #000000, #1a1a1a);
+    color: #ccff00; /* 霓虹綠色 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 10px;
+}
+/* 由於無法載入外部資源，我們主要依賴 monospace 字體 */
+h1 {
+    color: #ff00cc; /* 霓虹粉 */
+    text-shadow: 0 0 5px #ff00cc;
+}
+
+#game-container {
+    width: 100%;
+    max-width: 650px;
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.4); /* 綠色光暈 */
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #000;
+    padding: 10px;
+}
+
+canvas {
+    display: block;
+    border: 3px solid #00ff00; /* 綠色邊框 */
+    background-color: #000000;
+    border-radius: 2px;
+    touch-action: none; 
+    image-rendering: pixelated; /* 確保繪製的像素清晰 */
+}
+
+#game-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    background-color: #0d0d0d;
+    border-radius: 3px;
+    border: 1px solid #005500;
+}
+
+/* 按鈕風格 */
+.game-btn {
+    background: #00ff00;
+    color: #000000;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 3px;
+    box-shadow: 0 3px #009900;
+    transition: all 0.05s;
+    cursor: pointer;
+    border: none;
+    user-select: none;
+    font-size: 0.8rem;
+}
+
+.game-btn:active {
+    box-shadow: 0 1px #009900;
+    transform: translateY(2px);
+}
+
+#controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+    padding: 10px 0;
+}
+
+/* 訊息彈窗 */
+#message-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    display: none; 
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+#message-content {
+    background-color: #1a1a1a;
+    color: #00ff00;
+    padding: 30px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.7);
+    max-width: 90%;
+    border: 2px solid #00ff00;
+}
+
+#message-text {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    text-shadow: 0 0 3px #00ff00;
+}
