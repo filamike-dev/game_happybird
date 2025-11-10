@@ -3,338 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>工程用計算機</title>
-    <!-- 載入 Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* 使用 Inter 字體以保持專業外觀 */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 1rem;
-        }
-        /* 自訂按鈕樣式，確保觸摸友好 */
-        .calc-btn {
-            @apply flex items-center justify-center p-4 rounded-xl text-xl font-semibold transition duration-150 ease-in-out shadow-md;
-            height: 64px; /* 固定高度以保持一致性 */
-            user-select: none; /* 防止文字被選取 */
-        }
-        .op-btn {
-            @apply bg-orange-500 hover:bg-orange-600 text-white;
-        }
-        .num-btn {
-            @apply bg-white hover:bg-gray-100 text-gray-900;
-        }
-        .func-btn {
-            @apply bg-gray-200 hover:bg-gray-300 text-gray-700 text-base sm:text-lg;
-        }
-        .util-btn {
-            @apply bg-gray-300 hover:bg-gray-400 text-gray-800;
-        }
-        /* 讓顯示區域的文字可以正確對齊和溢出處理 */
-        #display {
-            @apply text-right break-words overflow-hidden;
-        }
-    </style>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'calc-bg': '#2d3748', // 深藍灰背景
-                    }
-                }
-            }
-        }
-    </script>
+    <title>療癒快樂小鳥 - Healing Happy Bird</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-gray-100">
-
-<div class="w-full max-w-lg mx-auto bg-white rounded-3xl shadow-2xl p-6">
-    <!-- 計算機主要容器 -->
-    <div id="calculator">
-        <!-- 顯示區域 -->
-        <div class="mb-6 p-4 bg-gray-800 rounded-2xl shadow-inner text-white">
-            <div id="expression-display" class="text-sm text-gray-400 h-6 overflow-hidden">0</div>
-            <div id="display" class="text-4xl sm:text-5xl mt-1 h-12 overflow-hidden whitespace-nowrap">0</div>
-        </div>
-
-        <!-- 按鈕網格 -->
-        <div class="grid grid-cols-5 gap-3">
-            <!-- 科學函數按鈕 (5 x 2) -->
-            <button class="calc-btn func-btn" data-value="sin">sin</button>
-            <button class="calc-btn func-btn" data-value="cos">cos</button>
-            <button class="calc-btn func-btn" data-value="tan">tan</button>
-            <button class="calc-btn func-btn" data-value="log">log₁₀</button>
-            <button class="calc-btn func-btn" data-value="ln">ln</button>
-
-            <button class="calc-btn func-btn" data-value="^">xʸ</button>
-            <button class="calc-btn func-btn" data-value="sqrt">√</button>
-            <button class="calc-btn func-btn" data-value="π">π</button>
-            <button class="calc-btn func-btn" data-value="e">e</button>
-            <button class="calc-btn func-btn" data-value="(">(</button>
+<body>
+    <div class="game-container">
+        <!-- Game Canvas -->
+        <canvas id="gameCanvas"></canvas>
+        
+        <!-- UI Overlay -->
+        <div class="ui-overlay">
+            <!-- Top UI Bar -->
+            <div class="top-ui">
+                <div id="uiContainer">
+                    <div id="score">0</div>
+                    <div id="confidenceContainer">
+                        <div id="confidenceFill"></div>
+                    </div>
+                </div>
+            </div>
             
-            <!-- 實用按鈕與基本運算符 (4 x 4 + 1) -->
-            <button class="calc-btn util-btn col-span-2" data-action="clear">AC</button>
-            <button class="calc-btn util-btn" data-action="backspace">←</button>
-            <button class="calc-btn util-btn" data-value="%">%</button>
-            <button class="calc-btn op-btn" data-value="/">÷</button>
-
-            <button class="calc-btn num-btn" data-value="7">7</button>
-            <button class="calc-btn num-btn" data-value="8">8</button>
-            <button class="calc-btn num-btn" data-value="9">9</button>
-            <button class="calc-btn util-btn" data-value=")">)</button>
-            <button class="calc-btn op-btn" data-value="*">×</button>
-
-            <button class="calc-btn num-btn" data-value="4">4</button>
-            <button class="calc-btn num-btn" data-value="5">5</button>
-            <button class="calc-btn num-btn" data-value="6">6</button>
-            <button class="calc-btn func-btn" data-value="! ">n!</button>
-            <button class="calc-btn op-btn" data-value="-">-</button>
-
-            <button class="calc-btn num-btn" data-value="1">1</button>
-            <button class="calc-btn num-btn" data-value="2">2</button>
-            <button class="calc-btn num-btn" data-value="3">3</button>
-            <button class="calc-btn num-btn" data-value=".">.</button>
-            <button class="calc-btn op-btn" data-value="+">+</button>
+            <!-- Encouragement Text -->
+            <div class="encouragement-text" id="encouragementText"></div>
             
-            <button class="calc-btn num-btn col-span-3" data-value="0">0</button>
-            <button class="calc-btn op-btn col-span-2" data-action="calculate">=</button>
+            <!-- Start Screen -->
+            <div class="start-screen" id="startScreen">
+                <div class="start-content">
+                    <h1 class="game-title">療癒快樂小鳥</h1>
+                    <p class="game-description">讓可愛的小鳥帶給你滿滿的正能量！</p>
+                    <button class="start-button" id="startButton">
+                        <span class="button-icon">🐦</span>
+                        開始療癒飛翔
+                    </button>
+                    <div class="instructions">
+                        <p>🖥️ 桌面：空格鍵或↑鍵控制小鳥</p>
+                        <p>📱 手機：點擊螢幕控制小鳥</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Game Over Screen -->
+            <div class="game-over-screen" id="gameOverScreen">
+                <div class="game-over-content">
+                    <h2 class="game-over-title">小鳥休息一下</h2>
+                    <p class="game-over-message">你已經很棒了！再試一次吧！</p>
+                    <div class="final-stats">
+                        <p>本次分數：<span id="finalScore">0</span></p>
+                        <p>最高信心值：<span id="maxConfidence">0</span>%</p>
+                    </div>
+                    <button class="restart-button" id="restartButton">
+                        <span class="button-icon">🌟</span>
+                        再飛一次
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Pause Button -->
+            <button class="pause-button" id="pauseButton">⏸️</button>
         </div>
         
-        <!-- 提示信息 -->
-        <div class="mt-4 text-center text-xs text-gray-500">
-            <p>注意：三角函數預設使用弧度 (Radians) 計算。</p>
-        </div>
+        <!-- Particle Canvas for Effects -->
+        <canvas id="particleCanvas" class="particle-canvas"></canvas>
     </div>
-</div>
-
-<script>
-    // JavaScript 邏輯
-    document.addEventListener('DOMContentLoaded', () => {
-        const display = document.getElementById('display');
-        const expressionDisplay = document.getElementById('expression-display');
-        const calculator = document.getElementById('calculator');
-        
-        // 狀態變數
-        let currentExpression = '';
-        let resultDisplayed = false;
-
-        // 常量映射
-        const CONSTANTS = {
-            'π': 'Math.PI',
-            'e': 'Math.E'
-        };
-
-        /**
-         * 更新顯示和表達式
-         * @param {string} newExpression - 要顯示和計算的新表達式
-         * @param {string} [result=''] - 如果是計算結果，則顯示結果
-         */
-        function updateDisplay(newExpression, result = '') {
-            currentExpression = newExpression;
-            if (result !== '') {
-                expressionDisplay.textContent = currentExpression;
-                display.textContent = result;
-                resultDisplayed = true;
-            } else {
-                expressionDisplay.textContent = currentExpression || '0';
-                display.textContent = currentExpression || '0';
-                resultDisplayed = false;
-            }
-        }
-
-        /**
-         * 清除所有輸入
-         */
-        function clearAll() {
-            updateDisplay('');
-        }
-
-        /**
-         * 刪除最後一個字符
-         */
-        function backspace() {
-            if (resultDisplayed) {
-                // 如果顯示的是結果，先清除結果，從當前表達式繼續
-                updateDisplay(currentExpression, '');
-            }
-            // 刪除最後一個字符
-            updateDisplay(currentExpression.slice(0, -1));
-        }
-
-        /**
-         * 處理數字和基本運算符的追加
-         * @param {string} value - 數字或運算符
-         */
-        function appendValue(value) {
-            if (resultDisplayed) {
-                // 如果顯示的是結果，按數字鍵應清除舊結果並開始新輸入
-                if (/[0-9.]/.test(value)) {
-                    updateDisplay(value);
-                } else {
-                    // 如果按的是運算符，則將結果作為新表達式的開頭
-                    updateDisplay(display.textContent + value);
-                }
-                return;
-            }
-            
-            // 避免連續運算符（除了雙負號）
-            const lastChar = currentExpression.slice(-1);
-            if (['+', '-', '*', '/', '^', '%'].includes(lastChar) && ['+', '*', '/', '^', '%'].includes(value)) {
-                // 替換舊的運算符
-                updateDisplay(currentExpression.slice(0, -1) + value);
-                return;
-            }
-
-            // 避免多個小數點
-            if (value === '.') {
-                const parts = currentExpression.split(/[\+\-\*\/\^\%\(\)]/).slice(-1)[0];
-                if (parts.includes('.')) {
-                    return;
-                }
-            }
-
-            updateDisplay(currentExpression + value);
-        }
-
-        /**
-         * 處理科學函數的追加
-         * @param {string} funcName - 函數名稱 (sin, cos, log, etc.)
-         */
-        function appendFunction(funcName) {
-            if (resultDisplayed) {
-                // 如果顯示的是結果，將其作為函數的參數
-                updateDisplay(funcName + '(' + display.textContent + ')');
-            } else {
-                updateDisplay(currentExpression + funcName + '(');
-            }
-        }
-
-        /**
-         * 處理常量的追加
-         * @param {string} constant - 常量名稱 (π, e)
-         */
-        function appendConstant(constant) {
-            if (resultDisplayed) {
-                // 如果顯示的是結果，清除舊結果，直接插入常量
-                updateDisplay(constant);
-            } else {
-                updateDisplay(currentExpression + constant);
-            }
-        }
-
-        /**
-         * 階乘函數 (n!)
-         * @param {number} n
-         */
-        function factorial(n) {
-            if (n < 0 || !Number.isInteger(n)) return NaN;
-            if (n === 0 || n === 1) return 1;
-            let result = 1;
-            for (let i = 2; i <= n; i++) {
-                result *= i;
-            }
-            return result;
-        }
-
-        /**
-         * 執行計算
-         */
-        function calculate() {
-            let expressionToEval = currentExpression;
-            
-            // 1. 替換常量
-            for (const [key, value] of Object.entries(CONSTANTS)) {
-                // 使用正則表達式確保只替換獨立的常量，而不是函數名的一部分
-                expressionToEval = expressionToEval.replace(new RegExp(key, 'g'), value);
-            }
-
-            // 2. 替換科學函數 (確保在常量替換之後執行)
-            expressionToEval = expressionToEval.replace(/sin\(/g, 'Math.sin(');
-            expressionToEval = expressionToEval.replace(/cos\(/g, 'Math.cos(');
-            expressionToEval = expressionToEval.replace(/tan\(/g, 'Math.tan(');
-            // log₁₀
-            expressionToEval = expressionToEval.replace(/log\(/g, 'Math.log10(');
-            // ln (自然對數)
-            expressionToEval = expressionToEval.replace(/ln\(/g, 'Math.log(');
-            // 乘冪
-            expressionToEval = expressionToEval.replace(/\^/g, '**');
-            // 開根號
-            expressionToEval = expressionToEval.replace(/sqrt\(/g, 'Math.sqrt(');
-            
-            // 3. 處理階乘 (n!) - 需要更複雜的處理，因為它是一個後綴運算符
-            expressionToEval = expressionToEval.replace(/(\d+(\.\d+)?)!/g, (match, p1) => {
-                return `factorial(${p1})`;
-            });
-            // 將階乘函數注入到 Math 物件中，以便 eval() 存取
-            const scope = { Math, factorial };
-
-
-            try {
-                // 執行計算
-                let finalResult;
-                // 使用 Function 構造函數代替 eval()，雖然仍有風險，但在單一文件環境中更容易控制
-                // 由於我們使用了自定義的 'factorial' 函數，我們需要一個執行上下文
-                // 為了讓自定義的 factorial 函數可以被 eval 訪問，我們將其添加到 window/global scope 或使用 Function 構造函數。
-                // 這裡我們使用 Function 構造函數來提供一個更安全的範圍 (scope)。
-
-                // 創建一個可以在其作用域內訪問 Math 和 factorial 的函數
-                const calculationFunction = new Function('Math', 'factorial', 'return ' + expressionToEval);
-                finalResult = calculationFunction(Math, factorial);
-
-                if (isNaN(finalResult) || !isFinite(finalResult)) {
-                    updateDisplay(currentExpression, '錯誤: 無效輸入');
-                } else {
-                    // 修正浮點數精度問題
-                    finalResult = parseFloat(finalResult.toFixed(10));
-                    updateDisplay(currentExpression, String(finalResult));
-                }
-            } catch (error) {
-                console.error("計算錯誤:", error);
-                updateDisplay(currentExpression, '錯誤: 語法錯誤');
-            }
-        }
-
-        /**
-         * 主事件監聽器：處理所有按鈕點擊
-         */
-        calculator.addEventListener('click', (event) => {
-            if (!event.target.classList.contains('calc-btn')) return;
-
-            const target = event.target;
-            const value = target.getAttribute('data-value');
-            const action = target.getAttribute('data-action');
-
-            if (action === 'clear') {
-                clearAll();
-            } else if (action === 'backspace') {
-                backspace();
-            } else if (action === 'calculate') {
-                calculate();
-            } else if (value) {
-                // 數字或基本運算符
-                if (/[0-9.+\-*/%^()!.]/.test(value)) {
-                    appendValue(value);
-                } 
-                // 科學函數
-                else if (['sin', 'cos', 'tan', 'log', 'ln', 'sqrt'].includes(value)) {
-                    appendFunction(value);
-                } 
-                // 常量
-                else if (['π', 'e'].includes(value)) {
-                    appendConstant(value);
-                }
-            }
-        });
-        
-        // 初始化顯示
-        clearAll();
-    });
-</script>
+    
+    <script src="game.js"></script>
 </body>
 </html>
